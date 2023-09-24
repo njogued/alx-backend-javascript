@@ -1,9 +1,14 @@
-const Utils = requie("./utils");
+const { expect } = require('chai');
 
-function sendPaymentRequestToApi(totalAmount, totalShipping) {
-  const result = Utils.calculateNumber("SUM", totalAmount, totalShipping);
-  console.log(`The total is: ${result}`);
-}
+const getPaymentTokenFromApi = require('./6-payment_token');
 
-module.exports = sendPaymentRequestToApi;
-0x06 - unittests_in_js / 5 - payment.js;
+describe('getPaymentTokenFromApi', () => {
+  it('checks output of getPaymentTokenFromApi with true as success', (done) => {
+    getPaymentTokenFromApi(true)
+      .then((res) => {
+        expect(res).to.include({ data: 'Successful response from the API' });
+        done();
+      })
+      .catch((err) => done(err));
+  });
+});
