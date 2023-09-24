@@ -1,8 +1,6 @@
-const Utils = requie("./utils");
-
-function sendPaymentRequestToApi(totalAmount, totalShipping) {
-  const result = Utils.calculateNumber("SUM", totalAmount, totalShipping);
-  console.log(`The total is: ${result}`);
+function getPaymentTokenFromAPI(success) {
+  if (success)
+    return Promise.resolve({ data: 'Successful response from the API' });
 }
-
-module.exports = sendPaymentRequestToApi;
+  
+module.exports = getPaymentTokenFromAPI;
