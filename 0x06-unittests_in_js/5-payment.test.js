@@ -1,24 +1,29 @@
-const { expect } = require("chai");
-const sinon = require("sinon");
+const { expect } = require('chai');
+const sinon = require('sinon');
 
-const Utils = require("./utils");
-const sendPaymentRequestToApi = require("./3-payment");
+const sendPaymentRequestToApi = require('./5-payment');
 
-describe("sendPaymentRequestToApi", () => {
-  const consoleSpy = sinon.spy(console, "log");
-  it("validates usage of Utils.calculateNumber", () => {
-    // Stub the function always return the same number 10
-    const calcNumStub = sinon.stub(Utils, "calculateNumber").returns(10);
-    // run the function with the parameters
-    sendPaymentRequestToApi(100, 20);
-    // check that the stub is being called with type = SUM, a = 100, and b = 20
-    expect(calcNumStub.calledWith("SUM", 100, 20)).to.be.true;
-    // check that the stub always return the same number 10
-    expect(calcNumStub.alwaysReturned(10)).to.be.true;
-    // check with spy that console.log is logging the correct message
-    expect(consoleSpy.calledWith("The total is: 10")).to.be.true;
+describe('sendPaymentRequestToApi', () => {
+  let consoleSpy;
 
-    calcNumStub.restore();
+  beforeEach(() => {
+    // runs before each test in this block
+    consoleSpy = sinon.spy(console, 'log');
+  });
+
+  afterEach(() => {
+    // runs after each test in this block
+    expect(consoleSpy.calledOnce).to.be.true;
     consoleSpy.restore();
+  });
+
+  it('checks output of sendPaymentRequestToApi with 100 and 20 as args', () => {
+    sendPaymentRequestToApi(100, 20);
+    expect(consoleSpy.calledWith('The total is: 120')).to.be.true;
+  });
+
+  it('checks output of sendPaymentRequestToApi with 10 and 10 as args', () => {
+    sendPaymentRequestToApi(10, 10);
+    expect(consoleSpy.calledWith('The total is: 20')).to.be.true;
   });
 });
